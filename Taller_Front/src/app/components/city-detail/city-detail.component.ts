@@ -24,11 +24,8 @@ export class CityDetailComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['city'] && this.city) {
-      // HU-04: load weather history
       this.weatherRecordService.getRecords(this.city.id)
         .subscribe(records => this.weatherRecords = records);
-
-      // HU-03: fetch current weather from WeatherAPI
       this.loading = true;
       this.weatherDetail = null;
       this.weatherService.getWeather(this.city.name).subscribe({
@@ -45,7 +42,6 @@ export class CityDetailComponent implements OnChanges {
   }
 
   saveWeather(): void {
-    // HU-04: save current weather as a new record
     if (!this.weatherDetail) return;
     this.weatherRecordService.saveRecord(this.city.id, {
       tempC: this.weatherDetail.temp_c,
